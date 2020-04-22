@@ -1,17 +1,32 @@
-var app = require('express')();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+/*var io = require('socket.io')(process.env.PORT || 3000);
+console.log('server started....');
+*/
 
-server.listen(3000);
+var express = require('express');
+var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+
+http.listen(process.env.PORT || 8080, function(){
+console.log('listening on: 8080');
+});
+
+
+//var app = require('express')();
+//var server = require('http').Server(app);
+//var io = require('socket.io')(server);
+
+//server.listen(3000);
 /*
 server.listen(process.env.PORT || 8080, function(){
     console.log('listening on: 8080');
 });*/
 
 
-app.get('/', function(req,res){
-    res.send('You got back');
-});
+//app.get('/', function(req,res){
+//    res.send('You got back');
+//});
 
 
 var enemies = [];
