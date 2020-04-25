@@ -156,7 +156,7 @@ io.on('connection', function(socket) {
         console.log(currentPlayer.name+' recv: respawn:'+JSON.stringify(data));
         var playerRespawn = {
         name:data.name,
-        health:data.health
+        health:100
         };
         socket.emit('respawn', playerRespawn);
         socket.broadcast.emit('respawn', playerRespawn);
