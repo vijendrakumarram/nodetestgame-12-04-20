@@ -153,20 +153,20 @@ io.on('connection', function(socket) {
     });
     
     socket.on('respawn', function(data) {
-        console.log(currentPlayer.name+' recv: respawn:'+JSON.stringify(data));
-           clients = clients.map(function(client,index){
+       console.log(currentPlayer.name+' recv: respawn:'+JSON.stringify(data));
+       var indexReSpawn = 0;
+       clients = clients.map(function(client,index){
            if(client.name == data.name) {
-               indexDamaged = index;
+               indexReSpawn = index;
                client.health = 100; 
-           }
-           return client;
-           });                 
-                
+       }
+       return client;
+       });                                                
+        
         var playerRespawn = {
-        name:data.name,
-        health:100
+            name: clients[indexReSpawn].name,
+            health:clients[indexReSpawn].health
         };
-        //socket.emit('respawn', playerRespawn);
         socket.broadcast.emit('respawn', playerRespawn);
         console.log(currentPlayer.name+' emit: respawn: '+JSON.stringify(playerRespawn));
     });
