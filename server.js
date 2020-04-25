@@ -18,14 +18,15 @@ console.log('listening on: 8080');
 //var io = require('socket.io')(server);
 
 //server.listen(3000);
+
 /*
 server.listen(process.env.PORT || 8080, function(){
     console.log('listening on: 8080');
-});*/
-
+});
+*/
 
 //app.get('/', function(req,res){
-//    res.send('You got back');
+ //   res.send('You got back');
 //});
 
 
@@ -150,7 +151,19 @@ io.on('connection', function(socket) {
             socket.broadcast.emit('health',response);
         }
     });
-
+    
+    socket.on('respawn', function(data) {
+        console.log(currentPlayer.name+' recv: respawn:'+JSON.stringify(data));
+        var playerRespawn = {
+        name:data.name,
+        health:data.health
+        };
+        socket.emit('respawn', playerRespawn);
+        socket.broadcast.emit('respawn', playerRespawn);
+        console.log(currentPlayer.name+'emit: respawn: '+JSON.stringify(playerRespawn));
+    });
+    
+    
     socket.on('disconnect',function(){
         console.log(currentPlayer.name+' recv: disconnect: '+ currentPlayer.name);  
         socket.broadcast.emit('other player disconnected', currentPlayer);
