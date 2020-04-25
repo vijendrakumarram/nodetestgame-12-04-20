@@ -158,7 +158,7 @@ io.on('connection', function(socket) {
         name:data.name,
         health:100
         };
-        socket.emit('respawn', playerRespawn);
+        //socket.emit('respawn', playerRespawn);
         socket.broadcast.emit('respawn', playerRespawn);
         console.log(currentPlayer.name+'emit: respawn: '+JSON.stringify(playerRespawn));
     });
