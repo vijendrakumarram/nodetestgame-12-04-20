@@ -2,6 +2,7 @@
 console.log('server started....');
 */
 
+
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
@@ -12,23 +13,17 @@ http.listen(process.env.PORT || 8080, function(){
 console.log('listening on: 8080');
 });
 
-
-//var app = require('express')();
-//var server = require('http').Server(app);
-//var io = require('socket.io')(server);
-
-//server.listen(3000);
-
 /*
-server.listen(process.env.PORT || 8080, function(){
-    console.log('listening on: 8080');
+var app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
+server.listen(3000);
+
+app.get('/', function(req,res){
+   res.send('You got back');
 });
 */
-
-//app.get('/', function(req,res){
- //   res.send('You got back');
-//});
-
 
 var enemies = [];
 var playerSpawnPoints = [];
@@ -154,7 +149,9 @@ io.on('connection', function(socket) {
     
     socket.on('respawn', function(data) {
        console.log(currentPlayer.name+' recv: respawn:'+JSON.stringify(data));
-       var indexReSpawn = 0;
+        currentPlayer.health = 100;
+        
+       /*var indexReSpawn = 0;
        clients = clients.map(function(client,index){
            if(client.name == data.name) {
                indexReSpawn = index;
@@ -165,10 +162,11 @@ io.on('connection', function(socket) {
         
         var playerRespawn = {
             name: clients[indexReSpawn].name,
-            health:clients[indexReSpawn].health
-        };
-        socket.broadcast.emit('respawn', playerRespawn);
-        console.log(currentPlayer.name+' emit: respawn: '+JSON.stringify(playerRespawn));
+            health: clients[indexReSpawn].health
+        };*/
+        //socket.emit('respawn', currentPlayer);
+        socket.broadcast.emit('respawn', currentPlayer);
+        console.log(currentPlayer.name+' emit: respawn: '+JSON.stringify(currentPlayer));
     });
     
     
